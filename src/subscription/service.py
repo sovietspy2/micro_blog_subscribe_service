@@ -1,6 +1,7 @@
-from typing import Annotated
+from typing import Annotated, ItemsView
 from fastapi import Body, APIRouter
 from pydantic import BaseModel, Field, EmailStr
+import logging
 
 router = APIRouter()
 
@@ -10,7 +11,7 @@ class Item(BaseModel):
     email: EmailStr | None = None
 
 
-@router.post("/subscriber")
-async def update_item(subscriber: Annotated[Item, Body(embed=True)]):
-    print(subscriber)
-    return "hello"
+@router.post("/subscription")
+async def subscribe(subscriber: Item):
+    logging.debug(subscriber.model_dump_json())
+    return "ok"
